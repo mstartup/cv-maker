@@ -1,18 +1,18 @@
 <template>
     <div class="experience">
         <!-- each experience input has company name, job title, start date, end date, description -->
-        <form id="experForm">
+        <form id="experForm" @submit.prevent="onCreateExperience">
             <label for="compName">Company name</label>
-            <input type="text" id="compName" name="compName" ref="compName" placeholder="Enter company name here" required>
+            <input type="text" id="compName" name="compName" v-model="compName" placeholder="Enter company name here" required>
             <label for="jobTitle">Job title</label>
-            <input type="text" id="jobTitle" name="jobTitle" ref="jobTitle" placeholder="Enter your job title here" required>
+            <input type="text" id="jobTitle" name="jobTitle" v-model="jobTitle" placeholder="Enter your job title here" required>
             <label for="startDate">StartDate</label>
-            <input type="date" id="startDate" name="startDate" ref="startDate" placeholder="Enter date when you started it">
+            <input type="date" id="startDate" name="startDate" v-model="startDate" placeholder="Enter date when you started it">
             <label for="endDate">StartDate</label>
-            <input type="date" id="endDate" name="endDate" ref="endDate" placeholder="Enter date when you quit">
+            <input type="date" id="endDate" name="endDate" v-model="endDate" placeholder="Enter date when you quit">
             <label for="desc">Describe your job</label>
-            <textarea col="3" row="30" id="desc" name="desc" ref="desc" placeholder="How whould you describe your job" cols="30" rows="10"></textarea>
-            <button type="submit" @click.prevent="getFormValues()">Submit</button>
+            <textarea col="3" row="30" id="desc" name="desc" v-model="desc" placeholder="How whould you describe your job" cols="30" rows="10"></textarea>
+            <button type="submit" :disabled="!formIsValid">Submit</button>
         </form>
 </div>
 </template>
@@ -28,13 +28,24 @@ export default ({
       desc: ''
     }
   },
+  computed: {
+    formIsValid () {
+      return this.compName !== '' && this.jobTitle !== ''
+    }
+  },
   methods: {
-    getFormValues () {
-      this.compName = this.$refs.compName.value
-      this.jobTitle = this.$refs.jobTitle.value
-      this.startDate = this.$refs.startDate.value
-      this.endDate = this.$refs.endDate.value
-      this.desc = this.$refs.desc.value
+    onCreateExperience () {
+      if (!this.formIsValid) {
+        return
+      }
+      const expeData = {
+        compName: this.compName,
+        jobTitle: this.jobTitle,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        desc: this.desc
+      }
+      this.$store.dispatch('experience/fetchExperience', expeData)
     }
   }
 })

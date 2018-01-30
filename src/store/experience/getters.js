@@ -1,3 +1,3 @@
-export const programmingLanguages = state => {
+export const experiance = state => {
   return state.experience
 }

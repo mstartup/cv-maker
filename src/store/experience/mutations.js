@@ -1,3 +1,3 @@
-export const setExperience = (state, experience) => {
-  state.experience = experience
+export const setExperience = (state, payload) => {
+  state.experience.push(payload)
 }
