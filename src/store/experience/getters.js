@@ -1,3 +1,3 @@
-export const experiance = state => {
-  return state.experience
+export const experiances = state => {
+  return state.experiences
 }
