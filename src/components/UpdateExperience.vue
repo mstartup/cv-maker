@@ -1,7 +1,7 @@
 <template>
     <div class="experience">
         <!-- each experience input has company name, job title, start date, end date, description -->
-        <form id="experForm" @submit.prevent="onCreateExperience">
+        <form id="experForm" @submit.prevent="onUpdateExperience">
             <label for="compName">Company name</label>
             <input type="text" id="compName" name="compName" v-model="compName" placeholder="Enter company name here" required>
             <label for="jobTitle">Job title</label>
@@ -18,25 +18,30 @@
 </template>
 
 <script>
-let id = 1
+import {mapGetters, mapActions} from 'vuex'
 export default ({
+  props: ['exp'],
   data () {
     return {
-      compName: '',
-      jobTitle: '',
-      startDate: '',
-      endDate: '',
-      desc: '',
-      isOpen: false
+      compName: this.exp.compName,
+      jobTitle: this.exp.jobTitle,
+      startDate: this.exp.startDate,
+      endDate: this.exp.endDate,
+      desc: this.exp.desc,
+      id: this.exp.id,
+      upOpen: false
     }
   },
   computed: {
     formIsValid () {
       return this.compName !== '' && this.jobTitle !== ''
-    }
+    },
+    ...mapGetters({
+      'experiances': 'experience/experiances'
+    })
   },
   methods: {
-    onCreateExperience () {
+    onUpdateExperience () {
       if (!this.formIsValid) {
         return
       }
@@ -46,12 +51,15 @@ export default ({
         startDate: this.startDate,
         endDate: this.endDate,
         desc: this.desc,
-        id: id
+        id: this.id
       }
-      this.$store.dispatch('experience/fetchExperience', exp)
-      this.$emit('closeForm', this.closeForm)
-      id++
-    }
+      this.$store.dispatch('experience/updateExperience', exp)
+      this.upOpen = false
+      this.$emit('closeForm', this.upOpen)
+    },
+    ...mapActions({
+      updateExperience: 'experience/updateExperience'
+    })
   }
 })
 </script>
