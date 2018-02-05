@@ -1,63 +1,83 @@
 <template>
-    <div class="experience">
-        <!-- each experience input has company name, job title, start date, end date, description -->
-        <form id="experForm" @submit.prevent="onCreateExperience">
-            <label for="compName">Company name</label>
-            <input type="text" id="compName" name="compName" v-model="compName" placeholder="Enter company name here" required>
-            <label for="jobTitle">Job title</label>
-            <input type="text" id="jobTitle" name="jobTitle" v-model="jobTitle" placeholder="Enter your job title here" required>
-            <label for="startDate">StartDate</label>
-            <input type="date" id="startDate" name="startDate" v-model="startDate" placeholder="Enter date when you started it">
-            <label for="endDate">StartDate</label>
-            <input type="date" id="endDate" name="endDate" v-model="endDate" placeholder="Enter date when you quit">
-            <label for="desc">Describe your job</label>
-            <textarea col="3" row="30" id="desc" name="desc" v-model="desc" placeholder="How whould you describe your job" cols="30" rows="10"></textarea>
-            <button type="submit" :disabled="!formIsValid">Submit</button>
-        </form>
-</div>
+    <div>
+        <h1>Experience</h1>
+        <ul>
+            <li v-for="experience in experiances" :key="experience.id">
+                <h4>Company name: {{experience.compName}}</h4>
+                <h5>Job title: {{experience.jobTitle}}</h5>
+                <h6>Start working {{experience.startDate}} and worked until {{experience.endDate}}</h6>
+                <h6>Job description: {{experience.desc}}</h6>
+                <button id='updateBtn' @click='openUpdate(experience)'>Update experience</button>
+                <button id="deleteBtn" @click='onDeleteExperience(experience)'>Delete this enter</button>
+            </li>
+        </ul>
+        <upExperience v-if="upOpen" :exp="expObj" @closeForm="upOpen = openUpdate($event)"></upExperience>
+        <crExperience v-if="isOpen" @closeForm="isOpen = toggle($event)"></crExperience>
+        <button id='showBtn' @click='toggle()'>Add experience</button>
+    </div>
 </template>
 
 <script>
-export default ({
-  data () {
+import crExperience from '../components/CreateExperience.vue'
+import upExperience from '../components/UpdateExperience.vue'
+import {mapGetters, mapActions} from 'vuex'
+export default {
+  name: 'Experience',
+  components: {
+    'crExperience': crExperience,
+    'upExperience': upExperience
+  },
+  data: function () {
     return {
-      compName: '',
-      jobTitle: '',
-      startDate: '',
-      endDate: '',
-      desc: ''
+      isOpen: false,
+      upOpen: false,
+      expObj: {}
     }
   },
   computed: {
-    formIsValid () {
-      return this.compName !== '' && this.jobTitle !== ''
-    }
+    ...mapGetters({
+      'experiances': 'experience/experiances'
+    })
   },
   methods: {
-    onCreateExperience () {
-      if (!this.formIsValid) {
-        return
+    toggle: function () {
+      this.isOpen = !this.isOpen
+      if (this.isOpen) {
+        document.getElementById('showBtn').textContent = 'Close form'
+      } else {
+        document.getElementById('showBtn').textContent = 'Add experience'
       }
-      const expeData = {
-        compName: this.compName,
-        jobTitle: this.jobTitle,
-        startDate: this.startDate,
-        endDate: this.endDate,
-        desc: this.desc
+    },
+    onDeleteExperience (data) {
+      let res = confirm('Are you sure')
+      if (!res) {
+        return null
+      } else {
+        let exp = data
+        this.$store.dispatch('experience/deleteExperience', exp)
       }
-      this.$store.dispatch('experience/fetchExperience', expeData)
-    }
+    },
+    openUpdate: function (data) {
+      this.upOpen = !this.upOpen
+      this.expObj = data
+      if (this.upOpen) {
+        document.getElementById('updateBtn').textContent = 'Close form'
+      } else {
+        document.getElementById('updateBtn').textContent = 'Update experience'
+      }
+    },
+    ...mapActions({
+      fetchExperience: 'experience/fetchExperience',
+      deleteExperience: 'experience/deleteExperience'
+    })
   }
-})
+}
 </script>
 
 <style scoped>
-    .experience {
-        width: 40%;
-        margin: 10px auto;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
     }
 </style>

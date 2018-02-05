@@ -1,3 +1,3 @@
 export default {
-  experience: []
+  experiences: []
 }
