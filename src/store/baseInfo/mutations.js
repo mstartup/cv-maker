@@ -1,6 +1,9 @@
 export const setBaseInfo = (state, payload) => {
   state.baseInfo.push(payload)
 }
+export const setBaseInfoExample = (state, payload) => {
+  state.baseInfoExample = payload
+}
 export const setLoadedBaseInfo = (state, payload) => {
   state.allBaseInfo = payload
 }
