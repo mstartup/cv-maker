@@ -1,3 +1,9 @@
 export default {
-  baseInfo: []
+  baseInfo: [],
+  baseInfoExample: {
+    name: '',
+    address: '',
+    phone: '',
+    email: ''
+  }
 }

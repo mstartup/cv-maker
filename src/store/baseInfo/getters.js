@@ -8,3 +8,7 @@ export const baseInfoToUpdate = state => {
     })
   }
 }
+
+export const baseInfoExample = state => {
+  return state.baseInfoExample
+}
