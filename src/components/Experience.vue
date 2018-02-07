@@ -41,6 +41,9 @@ export default {
   },
   methods: {
     toggle: function () {
+      if (this.upOpen) {
+        this.openUpdate()
+      }
       this.isOpen = !this.isOpen
       if (this.isOpen) {
         document.getElementById('showBtn').textContent = 'Close form'
@@ -58,6 +61,9 @@ export default {
       }
     },
     openUpdate: function (data) {
+      if (this.isOpen) {
+        this.toggle()
+      }
       this.upOpen = !this.upOpen
       this.expObj = data
       if (this.upOpen) {
