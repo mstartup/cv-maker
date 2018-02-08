@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import BaseInfoExample from '../components/BaseInfoExample.vue'
+import BaseInfo from '../components/BaseInfo.vue'
 import Education from '../components/Education.vue'
 import Experience from '../components/Experience.vue'
 import Image from '../components/Image.vue'
 export default {
   components: {
-    'base-info': BaseInfoExample,
+    'base-info': BaseInfo,
     'education': Education,
     'experience': Experience,
     'user-image': Image

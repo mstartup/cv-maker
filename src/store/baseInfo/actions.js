@@ -1,5 +1,3 @@
-import {setBaseInfo} from "./mutations";
-
 export const fetchBaseInfo = ({commit}, payload) => {
   commit('setBaseInfo', payload)
 }
