@@ -21,8 +21,8 @@ let id = 1
 export default {
   data () {
     return {
-      firstName: '',
-      lastName: '',
+      schoolTitle: '',
+      degreeTitle: '',
       homeAdress: '',
       mailAd: '',
       phoneNum: ''
