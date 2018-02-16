@@ -3,8 +3,8 @@
         <h1>Education</h1>
         <ul>
             <li v-for="edu in educations" :key="edu.id">
-                <h4>Company name: {{edu.schoolName}}</h4>
-                <h5>Job title: {{edu.degreeTitle}}</h5>
+                <h4>School name: {{edu.schoolName}}</h4>
+                <h5>Degree title: {{edu.degreeTitle}}</h5>
                 <h6>Start {{edu.startDate}} until {{edu.endDate}}</h6>
                 <h6>{{edu.comment}}</h6>
                 <button id='updateBtn' @click='openUpdate(edu)'>Update experience</button>

@@ -3,7 +3,7 @@
         <form id="experForm" @submit.prevent="onCreateEducation">
             <label for="schoolName">School name</label>
             <input type="text" id="schoolName" name="schoolName" v-model="schoolName" placeholder="Enter school name here" required>
-            <label for="degreeTitle">Job title</label>
+            <label for="degreeTitle">Degree title</label>
             <input type="text" id="degreeTitle" name="degreeTitle" v-model="degreeTitle" placeholder="Enter your degree title here" required>
             <label for="startDate">StartDate</label>
             <input type="date" id="startDate" name="startDate" v-model="startDate" placeholder="Enter date when you started it">
