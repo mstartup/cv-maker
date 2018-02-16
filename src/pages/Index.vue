@@ -5,9 +5,8 @@
             <base-info></base-info>
             <education></education>
             <experience></experience>
-        </div>
-        <div class="suggestions">
-            suggestions
+            <hr>
+            <router-link to="Template">Choose template</router-link>
         </div>
     </div>
 </template>
